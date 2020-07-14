@@ -1,0 +1,36 @@
+<div class="container">
+  <div class="row">
+    <div class="col-lg-6 landing-left">
+      <%= render "devise/shared/dummy_phone" %>
+    </div>
+    <div class="col-lg-6 landing-right text-center d-flex align-items-center">
+    <div>
+    <div class="form-login box">
+        <h3 class= "core-sprite brand-name-img"></h3>
+        <br>
+        <h5 class="light-color"><strong>Forgot your password?</strong></h5>
+        <p class="light-color"> Enter your username or email and we'll send you a link to get back into your account.</p>
+  
+        <hr>
+
+<%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f| %>
+  <%= render "shared/devisemsg" %>
+
+  <div class="form-group">
+    <%= f.email_field :email, autofocus: true, autocomplete: "email", placeholder: "Email", class: "form-control"  %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit "Send me reset password instructions", class: "btn btn-primary" %>
+  </div>
+<% end %>
+</div>
+
+<div class ="redirect-links box">
+
+<%= render "devise/shared/links" %>
+</div>
+</div>
+</div>
+</div>
+</div>
