@@ -64,7 +64,9 @@ Rails.application.configure do
 
   config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
 
-  
-  config.log_level = :fatal
+  config.log_level = :debug
 
+  config.active_storage.service = :amazon
+
+  # Paperclip.options[:command_path] = "/usr/bin/"
 end

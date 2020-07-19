@@ -1,0 +1,68 @@
+<% @posts.each do |post| %>
+<div class="card mt-3 post">
+    <div class="card-header d-flex align-items-center">
+        <%= link_to user_path(post.user), class: "no-text-decoration" do %>
+        <%= image_tag avatar_url(post.user), class: "post-author-icon" %>
+        <% end %>
+        <%= link_to user_path(post.user), class: "normal-color no-text-decoration", title: post.user.name do %>
+        <strong><%= post.user.name %></strong>
+        <% end %>
+        <%= link_to post_path(post), method: :delete, class: "ml-auto delete-post-icon mx-0 my-auto" do %>
+        <i class="far fa-trash-alt" aria-hidden="true"></i>
+        <% end %>
+    </div>
+
+    <% if post.images.size == 1 %>
+    <% if post.images.attached? %>
+    <% post.images.each do |image| %>
+    <%= image_tag url_for(image.variant(resize_to_limit: [1080, 1080])), class: "card-img-top" %>
+    <% end %>
+    <% end %>
+    <% else %>
+    <div id="carousel-post" class="carousel slide" data-ride="carousel"><%= post.id %>
+        <div class="carous el-inner">
+            <% post.images.each do |image| %>
+            <% if image == post.images.first %>
+            <div class="carousel-item active">
+                <% else %>
+                <div class="carousel-item">
+                    <% end %>
+                    <%= image_tag url_for(image.variant(resize_to_limit: [1080, 1080])), class: "card-img-top" %>
+                </div>
+                <% end %>
+            </div>
+            <a class="carousel-control-prev" href="#carousel-post-<%= post.id %>" role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+            </a>
+            <a class="carousel-control-next" href="#carousel-post-<%= post.id %>" role="button" data-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+            </a>
+        </div>
+        <% end %>
+
+        <div class="card-body">
+            <div class="row actions">
+                <a href="#" class="core-sprite love hide-text">Love</a>
+                <a href="#" class="core-sprite comment hide-text">Comment</a>
+                <a href="#" class="core-sprite bookmark hide-text ml-auto">Bookmark</a>
+            </div>
+            <div><strong><%= pluralize(16, "like") %></strong></div>
+            <div>
+                <span><strong> <%= post.user.name %> </strong></span>
+                <span><%= post.content %></span>
+            </div>
+            <div class="light-color post-time"><%= time_ago_in_words(post.created_at).upcase %>AGO</div>
+            <hr>
+            <div class=row actions>
+                <form action="#" class="w-100">
+                    <div>
+                        <textarea class="form-control comment-input border-0" placeholder="Add a comment ....."
+                            rows="1"></textarea>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <% end %>

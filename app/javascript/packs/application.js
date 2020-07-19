@@ -10,6 +10,8 @@ require("channels")
 require("bootstrap")
 require("jquery")
 require("popper.js")
+require("dropzone")
+
 
 import toastr from 'toastr'
 window.toastr = toastr

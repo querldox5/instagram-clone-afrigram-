@@ -1,21 +1,27 @@
 class User < ApplicationRecord
+  has_many :posts, dependent: :destroy
+
+  # has_attached_file :image, styles: { medium: "300x300>", thumb: "100x100>" }, default_url: "/images/:style/missing.png"
+  # validates_attachment_content_type :image, content_type: /\Aimage\/.*\z/
+
+  # has_one_attached :image
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable,
          :omniauthable, omniauth_providers: %i[facebook]
 
-  validates :name, :presence => true, :length => {:maximum => 50}
+  validates :name, presence: true, length: { maximum: 50 }
 
   def self.from_omniauth(auth)
     where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
       user.email = auth.info.email
       user.password = Devise.friendly_token[0, 20]
-      user.name = auth.info.name   # assuming the user model has a name
-      user.image = auth.info.image # assuming the user model has an image
+      user.name = auth.info.name # assuming the user model has a name
+      user.image = auth.info.image.gsub('_normal', '') # assuming the user model has an image
       user.uid = auth.uid
       user.provider = auth.provider
-      # If you are using confirmable and the provider(s) you use validate emails, 
+      # If you are using confirmable and the provider(s) you use validate emails,
       # uncomment the line below to skip the confirmation emails.
       # user.skip_confirmation!
     end
@@ -23,8 +29,8 @@ class User < ApplicationRecord
 
   def self.new_with_session(params, session)
     super.tap do |user|
-      if data = session["devise.facebook_data"] && session["devise.facebook_data"]["extra"]["raw_info"]
-        user.email = data["email"] if user.email.blank?
+      if data = session['devise.facebook_data'] && session['devise.facebook_data']['extra']['raw_info']
+        user.email = data['email'] if user.email.blank?
       end
     end
   end
