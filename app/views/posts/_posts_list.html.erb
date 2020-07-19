@@ -7,16 +7,16 @@
         <%= link_to user_path(post.user), class: "normal-color no-text-decoration", title: post.user.name do %>
         <strong><%= post.user.name %></strong>
         <% end %>
+        <% if @post.user == current_user %>
         <%= link_to post_path(post), method: :delete, class: "ml-auto delete-post-icon mx-0 my-auto" do %>
         <i class="far fa-trash-alt" aria-hidden="true"></i>
+        <% end %>
         <% end %>
     </div>
 
     <% if post.images.size == 1 %>
     <% if post.images.attached? %>
-    <% post.images.each do |image| %>
-    <%= image_tag url_for(image.variant(resize_to_limit: [1080, 1080])), class: "card-img-top" %>
-    <% end %>
+    <%= image_tag url_for(post.images.first.variant(resize_to_limit: [1080, 1080])), class: "card-img-top" %>
     <% end %>
     <% else %>
     <div id="carousel-post" class="carousel slide" data-ride="carousel"><%= post.id %>
@@ -53,7 +53,7 @@
                 <span><strong> <%= post.user.name %> </strong></span>
                 <span><%= post.content %></span>
             </div>
-            <div class="light-color post-time"><%= time_ago_in_words(post.created_at).upcase %>AGO</div>
+            <%= link_to time_ago_in_words(post.created_at).upcase + " AGO", post_path(post), class: "light-color post-time no-text-decoration" %>
             <hr>
             <div class=row actions>
                 <form action="#" class="w-100">

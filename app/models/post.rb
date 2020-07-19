@@ -5,6 +5,7 @@ class Post < ApplicationRecord
 
   has_many_attached :images
 
-  # has_attached_file :image, styles: { medium: "300x300>", thumb: "100x100>" }, default_url: "/images/:style/missing.png", :through => :photo
-  # validates_attachment_content_type :image, content_type: /\Aimage\/.*\z/, :through => :photo
+  # def belongs_to?(user)
+  #  Post.find_by(user_id: user.id, id: id)
+  # end
 end

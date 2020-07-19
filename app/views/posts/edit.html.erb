@@ -24,8 +24,17 @@
             <div class="comment-list py-2">
                 <% if @post.content.present? %>
                 <div>
-                    <span><strong><%= @post.user.name %></strong></span>
-                    <span><%= @post.content %></span>
+                    <span>
+                        <%= form_for(@post, :url => {:action => 'update'}, :html => {:multipart => true, :class => "p-0 border-0"}) do |f| %>
+                        <div class="form-group row mt-2">
+                            <div class="col pr-0">
+                                <%= f.text_field :content, class: "form-control border-0", placeholder: "Say something about this ...." %>
+                            </div>
+                        </div>
+                        <%= f.submit "Update post", class: "btn btn-primary" %>
+                        <% end %>
+
+                    </span>
                 </div>
                 <% end %>
                 <!-- load comment -->

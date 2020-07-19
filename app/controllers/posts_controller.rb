@@ -19,8 +19,33 @@ class PostsController < ApplicationController
     end
   end
 
-  def show
-    @posts = @post
+  def show; end
+
+  def edit
+    @post = Post.find(params[:id])
+    if @post.user != current_user
+      flash[:alert] = "Sorry, you're not permitted to edit this post"
+      redirect_to :root
+    end
+  end
+
+  def update
+    @post = Post.find(params[:id])
+    if @post.update_attributes(post_params)
+      flash[:success] = 'Post successfully updated'
+      redirect_to :post
+    else
+      flash[:alert] = 'Something went wrong'
+      render('edit')
+    end
+    # @post = current_user.posts.update!(post_params)
+    # if @post.save
+    #   redirect_to :posts
+    #   flash[:notice] = 'Saved ---'
+    # else
+    #   flash[:alert] = 'Something went wrong .....'
+    #   redirect_to :posts
+    # end
   end
 
   def destroy

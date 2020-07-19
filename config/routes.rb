@@ -12,5 +12,5 @@ Rails.application.routes.draw do
   # get '/users/:id', to: 'users#show'
   resources :users, only: [:show], path: 'accounts'
 
-  resources :posts, only: %i[index show new create destroy]
+  resources :posts, only: %i[index show new create edit update destroy]
 end
