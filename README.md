@@ -1,6 +1,6 @@
 
 # instagram-clone-afrigram
-A Simple CMS application with Ruby on rails!
+Web based Instagram clone app, based on Ruby on rails.
 
 ![Login page](https://github.com/querldox5/instagram-clone-afrigram/blob/master/public/screenshot-localhost_3000-2020.07.19-17_52_26.png)
 
